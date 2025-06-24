@@ -426,7 +426,7 @@ export const EnhancedGoogleLensSection: React.FC<EnhancedGoogleLensSectionProps>
               </div>
               
               <p className="text-green-700 text-sm mb-4">
-                ✨ We automatically detected structured feedback! You can process this directly or edit the text below.
+                ✨ We automatically detected structured feedback using [ ] and : formats! You can process this directly or edit the text below.
               </p>
             </motion.div>
           )}
@@ -468,20 +468,23 @@ export const EnhancedGoogleLensSection: React.FC<EnhancedGoogleLensSectionProps>
                 <div className="bg-green-50 rounded-xl p-4 border border-green-200">
                   <div className="flex items-center gap-2 mb-2">
                     <AlertCircle className="w-5 h-5 text-green-600" />
-                    <span className="font-bold text-green-800 text-sm">Supported Formats</span>
+                    <span className="font-bold text-green-800 text-sm">Supported Formats (Updated)</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                     <div className="space-y-1">
-                      <div><code className="bg-white px-2 py-1 rounded text-xs">##Positive##</code> Your feedback</div>
-                      <div><code className="bg-white px-2 py-1 rounded text-xs">##Needs Improvement##</code> Your feedback</div>
-                      <div><code className="bg-white px-2 py-1 rounded text-xs">##Observational##</code> Your feedback</div>
+                      <div><code className="bg-white px-2 py-1 rounded text-xs">[POSITIVE]</code> Your feedback</div>
+                      <div><code className="bg-white px-2 py-1 rounded text-xs">[NEEDS IMPROVEMENT]</code> Your feedback</div>
+                      <div><code className="bg-white px-2 py-1 rounded text-xs">[OBSERVATIONAL]</code> Your feedback</div>
                     </div>
                     <div className="space-y-1">
-                      <div><code className="bg-white px-2 py-1 rounded text-xs">#Type#</code> <code className="bg-white px-2 py-1 rounded text-xs">[Type]</code></div>
-                      <div><code className="bg-white px-2 py-1 rounded text-xs">Type:</code> <code className="bg-white px-2 py-1 rounded text-xs">**Type**</code></div>
-                      <div className="text-xs text-green-600">+ More variations supported</div>
+                      <div><code className="bg-white px-2 py-1 rounded text-xs">POSITIVE:</code> Your feedback</div>
+                      <div><code className="bg-white px-2 py-1 rounded text-xs">GOOD:</code> Your feedback</div>
+                      <div><code className="bg-white px-2 py-1 rounded text-xs">BAD:</code> Your feedback</div>
                     </div>
                   </div>
+                  <p className="text-xs text-green-600 mt-2">
+                    ⚠️ Note: ## and # formats have been removed for better accuracy
+                  </p>
                 </div>
                 
                 <div className="flex gap-3">

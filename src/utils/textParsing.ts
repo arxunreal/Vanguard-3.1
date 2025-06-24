@@ -3,7 +3,7 @@ export interface ParsedFeedback {
   text: string
 }
 
-// Enhanced feedback parsing with much better format detection and separation
+// Enhanced feedback parsing with only [ ] and : formats
 export const parseFeedbackText = (text: string): ParsedFeedback[] => {
   console.log('🔍 Parsing feedback text...')
   console.log('📝 Input text length:', text.length)
@@ -42,18 +42,12 @@ export const parseFeedbackText = (text: string): ParsedFeedback[] => {
 function splitByDelimiters(text: string): string[] {
   const segments: string[] = []
   
-  // Define all possible delimiters that indicate new feedback
+  // Define only [ ] and : delimiters
   const delimiters = [
-    // ## format
-    /##\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*##/gi,
-    // # format  
-    /#\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*#/gi,
     // [] format
     /\[\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*\]/gi,
     // : format (with word boundary)
-    /\b(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*:/gi,
-    // ** format
-    /\*\*\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*\*\*/gi
+    /\b(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*:/gi
   ]
   
   // Find all delimiter positions
@@ -102,18 +96,12 @@ function splitByDelimiters(text: string): string[] {
 function parseSegment(segment: string): ParsedFeedback[] {
   const feedbacks: ParsedFeedback[] = []
   
-  // Try different patterns to extract type and content
+  // Try only [ ] and : patterns
   const patterns = [
-    // ##Type## content
-    /^##\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*##\s*(.+)$/si,
-    // #Type# content
-    /^#\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*#\s*(.+)$/si,
     // [Type] content
     /^\[\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*\]\s*(.+)$/si,
     // Type: content
-    /^(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*:\s*(.+)$/si,
-    // **Type** content
-    /^\*\*\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*\*\*\s*(.+)$/si
+    /^(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*:\s*(.+)$/si
   ]
   
   for (const pattern of patterns) {
@@ -144,11 +132,8 @@ function parseSegment(segment: string): ParsedFeedback[] {
 
 function cleanFeedbackText(text: string): string {
   return text
-    // Remove any remaining delimiter patterns
-    .replace(/##\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*##/gi, '')
-    .replace(/#\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*#/gi, '')
+    // Remove any remaining delimiter patterns (only [ ] and : now)
     .replace(/\[\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*\]/gi, '')
-    .replace(/\*\*\s*(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*\*\*/gi, '')
     .replace(/(POSITIVE|GOOD|NEEDS?\s*IMPROVEMENT|BAD|OBSERVATIONAL|OBSERVATION)\s*:/gi, '')
     // Clean up extra whitespace and newlines
     .replace(/\s+/g, ' ')
